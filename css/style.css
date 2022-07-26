@@ -19,6 +19,7 @@ TWITTER: https://twitter.com/themefisher
 FACEBOOK: https://www.facebook.com/themefisher
 */
 @import url(https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,500,500i,600,600i,700,700i,800|Open+Sans:400,400i,600,600i,700,700i,800&display=swap);
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
 /* Typography
 ================================================== */
 body {
@@ -578,7 +579,7 @@ a[href^=tel] {
 /* Top Bar
 ================================================== */
 .top-bar {
-  padding: 8px 0;
+  padding: 0;
   background: #ebebeb;
   position: relative;
 }
@@ -690,7 +691,7 @@ ul.top-info li p.info-text {
   }
 }
 .header-one .logo-area {
-  padding: 30px 0;
+  padding: 10px 0;
 }
 
 .logo-area--background{
@@ -714,7 +715,7 @@ ul.top-info li p.info-text {
 }
 
 ul.navbar-nav > li > a {
-  padding: 15px 0 !important;
+  padding: 5px 0 !important;
   color: #fff;
 }
 
