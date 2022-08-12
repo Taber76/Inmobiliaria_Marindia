@@ -103,7 +103,7 @@ function templateDestacadas(prop){
     <div class="project-img-container">
       <a class="gallery-popup" href="${prop.foto}" aria-label="project-img">
         <img class="img-fluid" src="${prop.foto}" alt="project-img">
-        <span class="gallery-icon"><i class="fa fa-plus"></i></span>
+        <span class="gallery-icon">Mas detalles</span>
       </a>
       <div class="project-item-info">
         <div class="project-item-info-content">
@@ -138,7 +138,8 @@ const chacras = document.getElementById("chacras")
 // muestro las casas destacadas
 alPresionar(casas, "todas", "casa")
 
-// listado de eventos posibles
+
+// eventos posibles
 casas.addEventListener('click',() => {
   alPresionar(casas, "todas", "casa")
 })

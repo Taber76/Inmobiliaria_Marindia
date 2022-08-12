@@ -1,0 +1,194 @@
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<!-- 
+THEME: Constra - Construction Html5 Template
+VERSION: 1.0.0
+AUTHOR: Themefisher
+
+HOMEPAGE: https://themefisher.com/products/constra-construction-template/
+DEMO: https://demo.themefisher.com/constra/
+GITHUB: https://github.com/themefisher/Constra-Bootstrap-Construction-Template
+
+WEBSITE: https://themefisher.com
+TWITTER: https://twitter.com/themefisher
+FACEBOOK: https://www.facebook.com/themefisher
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+  <!-- Basic Page Needs
+================================================== -->
+  <meta charset="utf-8">
+  <title>Inmobiliaria Marindia</title>
+  <meta name="description" content="Compra, venta y alquiler de propiedades. Seriedad y responsabilidad nos caracterizan.">
+  <meta name="keywords" content="compra, venta, alquiler, casa, terreno, apartamento, marindia, salinas, pinamar, atlantida, costa, canelones, uruguay, real state">
+
+  <!-- Mobile Specific Metas
+================================================== -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Construction Html5 Template">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name=author content="Themefisher">
+  <meta name=generator content="Themefisher Constra HTML Template v1.0">
+
+  <!-- Favicon
+================================================== -->
+<link rel="shortcut icon" href="./images/favicon.ico">
+
+  <!-- CSS
+================================================== -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="../plugins/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="../plugins/fontawesome/css/all.min.css">
+  <!-- Animation -->
+  <link rel="stylesheet" href="../plugins/animate-css/animate.css">
+  <!-- slick Carousel -->
+  <link rel="stylesheet" href="../plugins/slick/slick.css">
+  <link rel="stylesheet" href="../plugins/slick/slick-theme.css">
+  <!-- Colorbox -->
+  <link rel="stylesheet" href="../plugins/colorbox/colorbox.css">
+  <!-- Template styles-->
+  <link rel="stylesheet" href="../css/style.css">
+
+</head>
+<body>
+
+<!-- Header start -->
+<header id="header" class="header-one">
+ 
+
+  <div class="site-navigation">
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+
+
+                <div class="row justify-content-center">
+                  <form id="formlogin">
+                    <input class="form-login my-2" id="input-usuario" type="text" placeholder="Usuario">
+                    <input class="form-login my-2" id="input-clave" type="password" placeholder="Clave">
+                    <button class="btn btn-primary" id="btn-submit">Ingresar</button>
+                  </form>
+                </div> 
+
+
+          </div>
+          <!--/ Col end -->
+        </div>
+        <!--/ Row end -->
+
+    </div>
+    <!--/ Container end -->
+
+  </div>
+  <!--/ Navigation end -->
+</header>
+<!--/ Header end -->
+
+<!-- LOGIN Form-->
+
+
+<!-- Administrador de propiedades -->
+<section class="container">
+  <div class="row">
+
+    <!-- menu lateral-->
+    <ul class="col-3 list-group">
+      <li id="nuevaPropiedad" class="btn list-group-item list-group-item-action disabled">Nueva propiedad</li>
+      <li class="btn list-group-item list-group-item-action disabled">Editar propiedad</li>
+      <li class="btn list-group-item list-group-item-action disabled">Cambiar estado propiedad</li>
+      <li class="btn list-group-item list-group-item-action disabled">Borrar propiedad</li>
+    </ul>
+
+    <!-- filtro y propiedades
+    <div class="col-9">
+      
+      -- filtro 
+      <div class="row">
+        <nav class="navbar navbar-expand-lg bg-light">
+          <div class="container-fluid justify-content-center"> 
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <select class="btn btn-dark disabled" id="tipoOperacion">
+                  <option>Venta</option>
+                  <option>Alquiler</option> 
+                </select>
+              </li>
+              <li class="nav-item">
+                <select class="btn btn-dark disabled" id="tipoPropiedad">
+                  <option>Tipo de propiedad</option>
+                  <option>Casa</option>
+                  <option>Apartamento</option>
+                  <option>Terreno</option>
+                </select>
+              </li>
+              <li class="nav-item">
+                <select class="btn btn-dark disabled" id="ubicacion">
+                  <option>Ubicacion</option>
+                  <option>Salinas</option>
+                  <option>Pinamar</option>
+                  <option>Marindia</option>
+                </select>
+              </li>
+              <li class="nav-item">
+                <button class="btn btn-primary disabled" type="button" onclick="buscarPropiedades()">BUSCAR</button>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+-->
+      <!-- propiedades -->
+      <div class="col-9" id="areaAdministrador">
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+  <!-- Javascript Files
+  ================================================== -->
+
+  <!-- initialize jQuery Library -->
+  <script src="../plugins/jQuery/jquery.min.js"></script>
+  <!-- Bootstrap jQuery -->
+  <script src="../plugins/bootstrap/bootstrap.min.js" defer></script>
+  <!-- Slick Carousel -->
+  <script src="../plugins/slick/slick.min.js"></script>
+  <script src="../plugins/slick/slick-animation.min.js"></script>
+  <!-- Color box -->
+  <script src="../plugins/colorbox/jquery.colorbox.js"></script>
+  <!-- shuffle -->
+  <script src="../plugins/shuffle/shuffle.min.js" defer></script>
+
+  
+
+  <!-- Google Map API Key-->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" defer></script>
+  <!-- Google Map Plugin-->
+  <script src="../plugins/google-map/map.js" defer></script>
+
+  <!-- Template custom -->
+<!--   <script src="../js/script.js"></script>
+
+  <script src="../js/busqueda.js"></script> -->
+
+  <script src="../js/administrador.js"></script>
+
+  </div><!-- Body inner end -->
+  </body>
+
+  </html>
