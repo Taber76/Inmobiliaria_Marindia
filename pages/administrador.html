@@ -59,6 +59,14 @@ FACEBOOK: https://www.facebook.com/themefisher
   <!-- Template styles-->
   <link rel="stylesheet" href="../css/style.css">
 
+
+
+  <!-- CURSO JAVASCRIPT-->
+  <script defer src="../js/datos.js"></script>
+  <script defer src="../js/templateshtml.js"></script>
+  <script defer src="../js/administrador.js"></script>
+
+
 </head>
 <body>
 
@@ -77,6 +85,8 @@ FACEBOOK: https://www.facebook.com/themefisher
                     <input class="form-login my-2" id="input-usuario" type="text" placeholder="Usuario">
                     <input class="form-login my-2" id="input-clave" type="password" placeholder="Clave">
                     <button class="btn btn-primary" id="btn-submit">Ingresar</button>
+                    
+                    <button class="btn btn-primary disabled" id="btn-logout">Salir</button>
                   </form>
                 </div> 
 
@@ -99,62 +109,28 @@ FACEBOOK: https://www.facebook.com/themefisher
 
 <!-- Administrador de propiedades -->
 <section class="container">
+
+  <div id="modal-container"></div>
+
   <div class="row">
 
     <!-- menu lateral-->
     <ul class="col-3 list-group">
       <li id="nuevaPropiedad" class="btn list-group-item list-group-item-action disabled">Nueva propiedad</li>
-      <li class="btn list-group-item list-group-item-action disabled">Editar propiedad</li>
-      <li class="btn list-group-item list-group-item-action disabled">Cambiar estado propiedad</li>
-      <li class="btn list-group-item list-group-item-action disabled">Borrar propiedad</li>
+      <!--<li id="editarPropiedad" class="btn list-group-item list-group-item-action disabled">Editar propiedad</li>
+      <li class="btn list-group-item list-group-item-action disabled">Cambiar estado propiedad</li>-->
+      <li id="borrarPropiedad" class="btn list-group-item list-group-item-action disabled">Borrar propiedad</li>
     </ul>
 
-    <!-- filtro y propiedades
-    <div class="col-9">
-      
-      -- filtro 
-      <div class="row">
-        <nav class="navbar navbar-expand-lg bg-light">
-          <div class="container-fluid justify-content-center"> 
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <select class="btn btn-dark disabled" id="tipoOperacion">
-                  <option>Venta</option>
-                  <option>Alquiler</option> 
-                </select>
-              </li>
-              <li class="nav-item">
-                <select class="btn btn-dark disabled" id="tipoPropiedad">
-                  <option>Tipo de propiedad</option>
-                  <option>Casa</option>
-                  <option>Apartamento</option>
-                  <option>Terreno</option>
-                </select>
-              </li>
-              <li class="nav-item">
-                <select class="btn btn-dark disabled" id="ubicacion">
-                  <option>Ubicacion</option>
-                  <option>Salinas</option>
-                  <option>Pinamar</option>
-                  <option>Marindia</option>
-                </select>
-              </li>
-              <li class="nav-item">
-                <button class="btn btn-primary disabled" type="button" onclick="buscarPropiedades()">BUSCAR</button>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
--->
-      <!-- propiedades -->
-      <div class="col-9" id="areaAdministrador">
 
-      </div>
+    <!-- propiedades -->
+    <div class="col-9" id="areaAdministrador">
+    
 
     </div>
 
   </div>
+
 </section>
 
 
@@ -181,12 +157,6 @@ FACEBOOK: https://www.facebook.com/themefisher
   <!-- Google Map Plugin-->
   <script src="../plugins/google-map/map.js" defer></script>
 
-  <!-- Template custom -->
-<!--   <script src="../js/script.js"></script>
-
-  <script src="../js/busqueda.js"></script> -->
-
-  <script src="../js/administrador.js"></script>
 
   </div><!-- Body inner end -->
   </body>

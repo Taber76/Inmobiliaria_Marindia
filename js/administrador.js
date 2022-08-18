@@ -1,138 +1,112 @@
 
-
-// =============== TEMPLATES ================= //
-
-
-function templateNuevaPropiedad(){
-
-return `<form class="row g-3">
-
-<div class="col-md-4 py-2">
-  <label for="tipoOperacion" class="form-label">Tipo de operacion</label>
-  <select id="tipoOperacion" class="form-control">
-    <option selected>Venta</option>
-    <option>Alquiler</option>
-  </select>
-</div>
-
-<div class="col-md-4 py-2">
-  <label for="tipoPropiedad" class="form-label">Tipo de propiedad</label>
-  <select id="tipoPropiedad" class="form-control">
-    <option selected>Casa</option>
-    <option>Apartamento</option>
-    <option>Terreno</option>
-  </select>
-</div>
-
-<div class="col-md-4 py-2">
-  <label for="ubicacion" class="form-label">Ubicacion</label>
-  <select id="ubicacion" class="form-control">
-    <option selected>Marindia</option>
-    <option>Pinamar</option>
-    <option>Salinas</option>
-  </select>
-</div>
-
-<div class="col-md-4 py-2">
-  <label for="inputValor" class="form-label">Valor</label>
-  <input type="text" class="form-control" id="inputValor" placeholder="UDS(venta) / UYU(alquiler)">
-</div>
-
-<div class="col-md-4 py-2">
-  <label for="inputSuperficie" class="form-label">Superficie m<sup>2</sup></label>
-  <input type="text" class="form-control" id="inputSuperficie">
-</div>
-
-<div class="col-md-4 py-2">
-  <label for="inputDormitorios" class="form-label">Cantidad de dormitorios</label>
-  <input type="text" class="form-control" id="inputDormitorios" placeholder="">
-</div>
-
-<div class="col-md-3 py-2">
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" id="inputGarage">
-    <label class="form-check-label" for="inputGarage">
-      Garage
-    </label>
-  </div>
-</div>
-
-<div class="col-md-3 py-2">
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" id="inputPiscina">
-    <label class="form-check-label" for="inputPiscina">
-      Piscina
-    </label>
-  </div>
-</div>
-
-<div class="col-12 py-2">
-  <label for="inputFoto" class="form-label">Foto</label>
-  <input type="text" class="form-control" id="inputFoto" placeholder="URL de la foto">
-</div>
-
-<div class="col-12 pt-5">
-  <button type="submit" class="btn btn-primary" id="gaurdarPropiedad">Guardar</button>
-</div>
-
-</form>
-`
-}
-
-
-// ======================= Login ====================== //
+// ======================= Funciones ====================== //
 
 function login(usuario, clave){
-  if(usuario === 'taba' & clave === '123'){
+
+  usuarios.forEach(ele => {
+  
+    if(ele.nombre == usuario & ele.clave == clave){   
+      nuevaPropiedad.classList.remove('disabled')  
+      borrarPropiedad.classList.remove('disabled')  
     
-    for (let i = 0; i < botones.length; i++){   //no pude recorrer botones con un forEach!!
-     
-      if(botones[i].classList.contains('disabled')){
-        botones[i].classList.remove('disabled')
-      }
-    }
+    }else{
+      modal('Nombre de Usuario o clave incorrecta', '')
+    } 
+  })
 
-  return true
-  }
-
-return false
+  return
 }
+
+function listarPropiedadesBorrar(){
+  
+  let fragment = ''
+  propiedades.forEach((ele) => {
+    fragment += templateBorrarPropiedad(ele)
+  })
+
+  areaAdministrador.innerHTML = fragment
+}
+
 
 
 // ============================ SCRIPT ========================= //
 
+let propiedades = cargaPropiedades()
+let usuarios = cargaUsuarios()
+
 
 const inputUsuario = document.querySelector("#input-usuario")
 const inputClave = document.querySelector("#input-clave")
-const formlogin = document.querySelector("#formlogin")
-const botones = document.getElementsByClassName("btn")
+const loginbtn = document.querySelector("#btn-submit")
+const logoutbtn = document.getElementById('btn-logout')
 const areaAdministrador = document.getElementById("areaAdministrador")
-let loginUser = false
+const nuevaPropiedad = document.getElementById("nuevaPropiedad")
+const borrarPropiedad = document.getElementById("borrarPropiedad")
 
 
-formlogin.addEventListener('click', (e) => {
+
+// Habilita botones si correcto usuario y clave
+loginbtn.addEventListener('click', (e) => {
   e.preventDefault()
 
   const usuario = inputUsuario.value
   const clave = inputClave.value
   
-  loginUser = login(usuario, clave)
+  login(usuario, clave)
 
-  if (loginUser){
+})
 
-    const nuevaPropiedad = document.getElementById("nuevaPropiedad")
+ // ========== Nueva propiedad ====================================== //
+nuevaPropiedad.addEventListener('click', () => {
+  
+  areaAdministrador.innerHTML = templateNuevaPropiedad()
 
-    nuevaPropiedad.addEventListener('click', () => {
-      
-      areaAdministrador.innerHTML = templateNuevaPropiedad()
+  const nuevaTipoOperacion = document.getElementById('tipoOperacion')
+  const nuevaTipoPropiedad = document.getElementById('tipoPropiedad')
+  const nuevaUbicacion = document.getElementById('ubicacion')
+  const nuevaValor = document.getElementById('inputValor')
+  const nuevaSuperficie = document.getElementById('inputSuperficie')
+  const nuevaDormitorios = document.getElementById('inputDormitorios')
+  const nuevaGarage = document.getElementById('inputGarage')
+  const nuevaPiscina = document.getElementById('inputPiscina')
+  const nuevaFoto = document.getElementById('inputFoto')
+  const nuevaGuardar = document.getElementById('guardarPropiedad')
 
-    })
 
-  }
+  nuevaGuardar.addEventListener('click', (e) => {
+    e.preventDefault()
+  
+    if( nuevaValor.value == '' || nuevaSuperficie.value == '' 
+    || (nuevaTipoPropiedad.value != "Terreno" & nuevaDormitorios.value == '')){
+  
+      modal('Valores incorrectos', 'Revise e intente nuevamente')
+  
+    }else{
+  
+      propiedades.push(new Propiedad( propiedades[propiedades.length - 1].id + 1,
+        `/images/propiedades/${nuevaFoto.value}`, nuevaTipoOperacion.value, nuevaTipoPropiedad.value, nuevaUbicacion.value, nuevaValor.value,
+        nuevaSuperficie.value, nuevaDormitorios.value, nuevaGarage.checked, nuevaPiscina.checked))
+  
+        localStorage.setItem('propiedades', JSON.stringify(propiedades))
+
+        //modal('Propiedad guardada','')
+    }
+  })
 })
 
 
+// =================== Borrar Propiedad ================================ //
 
+borrarPropiedad.addEventListener('click', () => {
 
+  listarPropiedadesBorrar()
 
+  window.addEventListener('click', (e) => {
 
+    borrarPropiedady(e.target.id.slice(18))
+   
+    listarPropiedadesBorrar()
+
+  })
+
+})

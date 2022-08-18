@@ -3380,3 +3380,24 @@ label {
   font-weight: 700;
 }
 /*# sourceMappingURL=style.css.map */
+
+
+/* Modal
+======================================== */
+.modal {
+  background-color: antiquewhite;
+  opacity: 0.9;
+  border-radius: 5px;
+  display: block;
+  text-align: center;
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 30px;
+
+}
