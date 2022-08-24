@@ -35,7 +35,7 @@ function crearPropiedades(){
   array.push(new Propiedad( 4, "/images/propiedades/apartamento1.png", "alquiler", "apartamento", "Marindia", 12000, 60, 2, false, false))
   array.push(new Propiedad( 5, "/images/propiedades/apartamento2.png", "alquiler", "apartamento", "Pinamar", 14000, 70, 2, false, false))
   array.push(new Propiedad( 6, "/images/propiedades/apartamento3.png", "alquiler", "apartamento", "Salinas", 10000, 50, 1,true, false))
-  array.push(new Propiedad( 7, "/images/propiedades/apartamento4.png", "venta", "apartamento", "Pinamar", 85500, 62, 2, false, false))
+  array.push(new Propiedad( 7, "/images/propiedades/apartamento4.png", "venta", "apartamento", "Pinamar", 85500, 62, 2, false, true))
   array.push(new Propiedad( 8, "/images/propiedades/apartamento5.png", "venta", "apartamento", "Marindia", 52600, 40, 1, false, false))
   array.push(new Propiedad( 9, "/images/propiedades/casa4.png", "venta", "casa", "Salinas", 120000, 120, 3, true, false))
   array.push(new Propiedad( 10, "/images/propiedades/casa5.png", "venta", "casa", "Pinamar", 100000, 100, 2, false, false))
@@ -86,15 +86,38 @@ function cargaUsuarios(){
 }
 
 
-// ==================================== BORRAR REGISTROS ==================== //
+// ==================================== BORRAR PROPIEDADES ==================== //
 
-function borrarPropiedady(idborrar){
+function borrarPropiedad(idborrar, areaEditarPropiedad){
 
-  idborrar != "" && propiedades.splice(propiedades.findIndex((e) => e.id == idborrar), 1)
+  if (idborrar != ""){
+    
+    Swal.fire({
+      title: 'Desea borrar la propiedad?',
+      showDenyButton: true,
+      icon: 'warning',
+      confirmButtonText: 'Si, borrar',
+      denyButtonText: `No, cancelar`,
+      confirmButtonColor: '#d33',
+      denyButtonColor: '#008000',
+    }).then((result) => {
+      
+      if (result.isConfirmed) {
+        Swal.fire('Borrada!', '', 'success')
+        propiedades.splice(propiedades.findIndex((e) => e.id == idborrar), 1)
+        localStorage.setItem('propiedades', JSON.stringify(propiedades))
+        listarPropiedadesEditar(areaEditarPropiedad)
 
-  localStorage.setItem('propiedades', JSON.stringify(propiedades))
+      } else if (result.isDenied) {
+        Swal.fire('No se ha borrado la propiedad', '', 'info')
+        
+      }
+    })
+      
+  }
   
-  return
+  return 
 }
+
 
 console.log('DATOS')

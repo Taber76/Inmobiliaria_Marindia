@@ -37,10 +37,11 @@ return card
 // genero fragmento HTML segun tipo de operacion y propiedad
 function templateSegunPropiedad (prop){
   fragment = ``
+
   let moneda = "USD"
-  if(prop.tipoOperacion.toLowerCase() == "alquiler"){
-    moneda = "UYU"
-  }
+  prop.tipoOperacion.toLowerCase() == "alquiler" && (moneda = "UYU")
+  
+
   fragment += `<div class="col-md-4 gap-3" style="padding: 20px;" id="template">
                 <div class="card">
                     <img src="${prop.foto}" class="card-img-top" alt="...">
@@ -60,26 +61,21 @@ function templateSegunPropiedad (prop){
     default: // si no es terreno
       // agrego superficie
       fragment += `<ul class="list-group list-group-flush">
-                    <li class="list-group-item">Superficie ${prop.superficie}m2</li>`                   
+                    <li class="list-group-item">Superficie ${prop.superficie}m2</li>`   
+
       // agrego dormitorios
-      if(prop.dormitorios < 2){
-        fragment += `<li class="list-group-item">${prop.dormitorios} dormitorio</li>`     
-      }else{
-        fragment += `<li class="list-group-item">${prop.dormitorios} dormitorios</li>`
-      }
+      fragment += `<li class="list-group-item">${prop.dormitorios} dormitorio`
+      prop.dormitorios < 2 ? fragment += `</li>` :  fragment += `s</li>` // OPERADOR TERNARIO===========
+      
+
       // agrego garage y/o piscina
-      if(prop.garage){
+      if(prop.garage){ 
         fragment += `<li class="list-group-item">Cuenta con garage`
-        if(prop.piscina){
-          fragment += ` y piscina</li>`
-        }else{
-          fragment += `</li>`
-        }
+        prop.piscina ? fragment += ` y piscina</li>` :  fragment += `</li>` // OPERADOR TERNARIO==========
       }else{
-        if(prop.piscina){  
-          fragment += `<li class="list-group-item">Cuenta con piscina</li>`
-        } 
+        prop.piscina && (fragment += `<li class="list-group-item">Cuenta con piscina</li>`) // OPERADOR LOGICO AND===========
       }
+
       // completo fragment
       fragment += `</ul>
                 </div>
@@ -106,7 +102,7 @@ function templateNotFound(){
 // =============== TEMPLATES PAGINA ADMINISTRADOR ================= //
 function templateNuevaPropiedad(){
 
-  return `<form class="row g-3">
+  return `<form class="areaNuevaPropiedad row g-3">
   
   <div class="col-md-4 py-2">
     <label for="tipoOperacion" class="form-label">Tipo de operacion</label>
@@ -181,7 +177,7 @@ function templateNuevaPropiedad(){
 }
 
 
-function templateBorrarPropiedad(prop){
+function templateeditarPropiedad(prop){
 
   let card = 
   `   <div class="row border mb-5">
@@ -200,14 +196,14 @@ function templateBorrarPropiedad(prop){
           <h5>Superficie: ${prop.superficie}</h5>
         </div>
         <div class="col-md-3 justify-content-center">
-          <button id="btnBorrarPropiedad${prop.id}" class="btn btn-danger mt-2">BORRAR</button>
+          <button id="btneditarPropiedad${prop.id}" class="btn btn-danger mt-2">BORRAR</button>
         </div>
       </div>
   `
   return card
 }
   
-  
+
 // ==================== MODAL =================== // 
 
 function modal(titulo, subtitulo){

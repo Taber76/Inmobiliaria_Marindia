@@ -62,10 +62,11 @@ FACEBOOK: https://www.facebook.com/themefisher
 
 
   <!-- CURSO JAVASCRIPT-->
+  <script defer src="../plugins/sweeralert/sweetalert2.all.min.js"></script>
   <script defer src="../js/datos.js"></script>
   <script defer src="../js/templateshtml.js"></script>
   <script defer src="../js/administrador.js"></script>
-
+ 
 
 </head>
 <body>
@@ -77,19 +78,21 @@ FACEBOOK: https://www.facebook.com/themefisher
   <div class="site-navigation">
     <div class="container">
         <div class="row">
-          <div class="col-lg-12">
+          
+          <div id="usuarioActual" class="col-lg-3 usuarioLogueado"> 
+          
+          </div>
 
+          <div class="col-lg-9">
 
                 <div class="row justify-content-center">
                   <form id="formlogin">
                     <input class="form-login my-2" id="input-usuario" type="text" placeholder="Usuario">
                     <input class="form-login my-2" id="input-clave" type="password" placeholder="Clave">
-                    <button class="btn btn-primary" id="btn-submit">Ingresar</button>
-                    
-                    <button class="btn btn-primary disabled" id="btn-logout">Salir</button>
+                    <button id="btn-submit" type="button" class="btn btn-secondary" >Ingresar</button>           
+                    <button id="btn-logout" class="btn btn-secondary"  disabled>Cerrar sesión</button>
                   </form>
                 </div> 
-
 
           </div>
           <!--/ Col end -->
@@ -115,11 +118,11 @@ FACEBOOK: https://www.facebook.com/themefisher
   <div class="row">
 
     <!-- menu lateral-->
-    <ul class="col-3 list-group">
+    <ul id="btnPrincipales" class="col-3 list-group">
       <li id="nuevaPropiedad" class="btn list-group-item list-group-item-action disabled">Nueva propiedad</li>
       <!--<li id="editarPropiedad" class="btn list-group-item list-group-item-action disabled">Editar propiedad</li>
       <li class="btn list-group-item list-group-item-action disabled">Cambiar estado propiedad</li>-->
-      <li id="borrarPropiedad" class="btn list-group-item list-group-item-action disabled">Borrar propiedad</li>
+      <li id="editarPropiedad" class="btn list-group-item list-group-item-action disabled">Editar propiedad</li>
     </ul>
 
 

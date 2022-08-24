@@ -31,10 +31,8 @@ function listarPropiedades(tipoOperacion, tipoPropiedad, ubicacion){
       }
   })
 
-
-  if(fragment == ""){
-    fragment += templateNotFound()
-  }
+ 
+  fragment == "" && (fragment += templateNotFound()) // no hubieron coincidencias de busqueda 
 
   //agrego fragment al HTML
   htmlfiltropropiedades.innerHTML = fragment

@@ -20,6 +20,8 @@ function propDestacadas(tipoOperacion, tipoPropiedad){
   })
   
   htmldestacadas.innerHTML = fragment
+
+  return
 }
 
 
@@ -30,15 +32,19 @@ function borrarActives(){
   alquileres.parentNode.className = "" 
   terrenos.parentNode.className = "" 
   locales.parentNode.className = "" 
-  chacras.parentNode.className = "" 
+  chacras.parentNode.className = ""
+  
+  return
 }
 
 
-// pongo active la seleccion y muestro las propiedades
+// Pongo active la seleccion y muestro las propiedades
 function alPresionar(opcion, tipoOperacion, tipoPropiedad){
   borrarActives()
   opcion.parentNode.className = "active"
   propDestacadas(tipoOperacion, tipoPropiedad)
+
+  return
 }
 
 

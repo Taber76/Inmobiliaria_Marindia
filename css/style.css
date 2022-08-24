@@ -3399,5 +3399,20 @@ label {
   bottom: 0;
   margin: auto;
   padding: 30px;
+}
+
+.usuarioLogueado{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin: auto;
+  padding: 0;
 
 }
+
+.usuarioLogueado-texto{
+  margin: 0;
+  padding: 0;
+  color: #4a5764;
+}
+

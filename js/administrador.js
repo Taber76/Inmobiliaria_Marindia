@@ -1,60 +1,95 @@
 
 // ======================= Funciones ====================== //
 
-function login(usuario, clave){
+function login(usuario, clave){ 
 
-  usuarios.forEach(ele => {
+  let rol = ''
+  let correcta = false
   
-    if(ele.nombre == usuario & ele.clave == clave){   
-      nuevaPropiedad.classList.remove('disabled')  
-      borrarPropiedad.classList.remove('disabled')  
-    
-    }else{
-      modal('Nombre de Usuario o clave incorrecta', '')
-    } 
+  usuarios.forEach(ele => {
+    if (ele.nombre === usuario & ele.clave === clave){
+      correcta = true
+      rol = ele.rol
+    }
   })
+
+  return [correcta, rol]
+}
+
+
+
+function listarPropiedadesEditar(elemento){  
+  
+  let fragment = ''
+  propiedades.forEach((ele) => {
+    fragment += templateeditarPropiedad(ele)
+  })
+
+  elemento.innerHTML = fragment
 
   return
 }
 
-function listarPropiedadesBorrar(){
-  
-  let fragment = ''
-  propiedades.forEach((ele) => {
-    fragment += templateBorrarPropiedad(ele)
-  })
-
-  areaAdministrador.innerHTML = fragment
-}
 
 
+// =============================== SCRIPT ============================= //
 
-// ============================ SCRIPT ========================= //
-
+// cargo los array
 let propiedades = cargaPropiedades()
 let usuarios = cargaUsuarios()
 
 
+// declaro los botones principales
+const btnPrincipales = document.querySelector("#btnPrincipales")
 const inputUsuario = document.querySelector("#input-usuario")
 const inputClave = document.querySelector("#input-clave")
 const loginbtn = document.querySelector("#btn-submit")
-const logoutbtn = document.getElementById('btn-logout')
+const logoutbtn = document.querySelector('#btn-logout')
 const areaAdministrador = document.getElementById("areaAdministrador")
 const nuevaPropiedad = document.getElementById("nuevaPropiedad")
-const borrarPropiedad = document.getElementById("borrarPropiedad")
+const editarPropiedad = document.getElementById("editarPropiedad")
+const logged = document.getElementById('usuarioActual')
 
 
-
-// Habilita botones si correcto usuario y clave
+// ============= Login ================
 loginbtn.addEventListener('click', (e) => {
   e.preventDefault()
 
   const usuario = inputUsuario.value
   const clave = inputClave.value
   
-  login(usuario, clave)
+
+  if (login(usuario, clave)[0]){
+    // usuario logeado - habilito / desabilito botones
+    nuevaPropiedad.classList.remove('disabled')  
+    editarPropiedad.classList.remove('disabled')
+    loginbtn.setAttribute("disabled", "")
+    logoutbtn.removeAttribute("disabled")
+    inputUsuario.value = ''
+    inputClave.value = ''
+    logged.innerHTML = `<h5 class="usuarioLogueado-texto">Bienvenido ${usuario} - ${login(usuario, clave)[1]}</h5>`
+      
+
+  }else{
+    modal('Nombre de Usuario o clave incorrecta', '')
+  }
 
 })
+
+// ================= Logout =================
+logoutbtn.addEventListener('click', (e) =>{
+  e.preventDefault()
+  nuevaPropiedad.classList.add('disabled')  
+  editarPropiedad.classList.add('disabled')
+  logoutbtn.setAttribute("disabled", "")
+  loginbtn.removeAttribute("disabled")
+  logged.innerHTML = ''
+  areaAdministrador.innerHTML = ''
+
+
+})
+
+
 
  // ========== Nueva propiedad ====================================== //
 nuevaPropiedad.addEventListener('click', () => {
@@ -76,12 +111,13 @@ nuevaPropiedad.addEventListener('click', () => {
   nuevaGuardar.addEventListener('click', (e) => {
     e.preventDefault()
   
+    
     if( nuevaValor.value == '' || nuevaSuperficie.value == '' 
     || (nuevaTipoPropiedad.value != "Terreno" & nuevaDormitorios.value == '')){
   
       modal('Valores incorrectos', 'Revise e intente nuevamente')
   
-    }else{
+    }else{ // guardo nueva propiedad si los datos son validos
   
       propiedades.push(new Propiedad( propiedades[propiedades.length - 1].id + 1,
         `/images/propiedades/${nuevaFoto.value}`, nuevaTipoOperacion.value, nuevaTipoPropiedad.value, nuevaUbicacion.value, nuevaValor.value,
@@ -89,23 +125,25 @@ nuevaPropiedad.addEventListener('click', () => {
   
         localStorage.setItem('propiedades', JSON.stringify(propiedades))
 
-        //modal('Propiedad guardada','')
+        modal('Propiedad guardada','')
     }
   })
 })
 
 
-// =================== Borrar Propiedad ================================ //
+// =================== Editar Propiedad ================================ //
 
-borrarPropiedad.addEventListener('click', () => {
+editarPropiedad.addEventListener('click', () => {
 
-  listarPropiedadesBorrar()
+  areaAdministrador.innerHTML = '<div id="containerEdicion"></div>'
 
-  window.addEventListener('click', (e) => {
+  const areaEditarPropiedad = document.getElementById('containerEdicion')
+  listarPropiedadesEditar(areaEditarPropiedad)
 
-    borrarPropiedady(e.target.id.slice(18))
-   
-    listarPropiedadesBorrar()
+  areaEditarPropiedad.addEventListener('click', (e) => {
+
+    //slice(18) es para tomar solo la parte numerica del id: "btneditarPropiedadNNN"
+    borrarPropiedad(e.target.id.slice(18), areaEditarPropiedad)
 
   })
 

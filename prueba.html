@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Google Maps Coordinates on Click</title>
+        <style>
+            /* Establezca siempre la altura del mapa explícitamente para definir el tamaño del div
+            * elemento que contiene el mapa. */
+            #map {
+                width: 1200px;
+                height: 800px;
+                
+            }
+            /* Opcional: hace que la página de muestra llene la ventana. */
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Google Maps Container -->
+        <div id="map"></div>
+
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYqPR5GkxwKplarJ3GV_kGjWFm10nrGLA&callback=initMap">
+        </script>
+        <script>
+            var map;
+
+            // Devolución de llamada ejecutada cuando se ha cargado el script de Google Maps
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 10,
+                    center: {
+                        lat: 7.118389341039206, 
+                        lng: -73.12187523419817
+                    }
+                });
+
+                // Agregar oyente de clics en el mapa
+                google.maps.event.addListener(map, "click", function (event) {
+                    var latLng = event.latLng;
+
+                    var marker = new google.maps.Marker({
+                       position: new google.maps.LatLng(latLng.lat(), latLng.lng()),
+                        map: map,
+                      });  
+                    
+                    alert("Latitude: " + latLng.lat() + ", Longitude: " + latLng.lng());
+                });
+            }
+        </script>
+    </body>
+</html>
