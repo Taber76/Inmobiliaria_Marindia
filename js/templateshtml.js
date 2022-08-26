@@ -65,13 +65,13 @@ function templateSegunPropiedad (prop){
 
       // agrego dormitorios
       fragment += `<li class="list-group-item">${prop.dormitorios} dormitorio`
-      prop.dormitorios < 2 ? fragment += `</li>` :  fragment += `s</li>` // OPERADOR TERNARIO===========
+      prop.dormitorios < 2 ? fragment += `</li>` :  fragment += `s</li>` // OPERADOR TERNARIO=========================
       
 
       // agrego garage y/o piscina
       if(prop.garage){ 
         fragment += `<li class="list-group-item">Cuenta con garage`
-        prop.piscina ? fragment += ` y piscina</li>` :  fragment += `</li>` // OPERADOR TERNARIO==========
+        prop.piscina ? fragment += ` y piscina</li>` :  fragment += `</li>` // OPERADOR TERNARIO=========================
       }else{
         prop.piscina && (fragment += `<li class="list-group-item">Cuenta con piscina</li>`) // OPERADOR LOGICO AND===========
       }
@@ -80,7 +80,7 @@ function templateSegunPropiedad (prop){
       fragment += `</ul>
                 </div>
               </div>`
-              console.log(fragment)
+              
   }
   return fragment
 }
@@ -96,6 +96,43 @@ function templateNotFound(){
     </div>`
   return card
 }
+
+
+// InfoWindows para el mapa
+
+function contenidoHTMLInfoWindow(prop){
+
+  let moneda = "USD"
+  if(prop.tipoOperacion.toLowerCase() == "alquiler"){
+    moneda = "UYU"
+  }
+
+  let card =
+  ` <div class="container">  
+      <div class="row">
+        
+        <div class="col-md-6">
+          <img src="${prop.foto}" class="card-img-top" alt="">
+        </div>
+        
+        <div class="col-md-3 justify-content-center"> 
+          <h4>${prop.ubicacion}</h4>       
+          <h5>${prop.tipoOperacion.toUpperCase()}</h5>
+          <h5>Superficie: ${prop.superficie}m<sup>2</sup></h5>
+          <h5>Dormitorios: ${prop.dormitorios}</h5>
+          <h5>ID: ${prop.id}</h5>
+        </div>
+
+        <div class="col-md-3 justify-content-center">
+          <h5>${prop.tipoPropiedad.toUpperCase()}</h5>
+          <h5>${moneda} ${prop.valor}</h5>        
+        </div>
+
+      </div>
+    </div>`
+  return card
+}
+
 
 
 
@@ -167,6 +204,8 @@ function templateNuevaPropiedad(){
     <label for="inputFoto" class="form-label">Foto</label>
     <input type="text" class="form-control" id="inputFoto" placeholder="Nombre de archivo de la foto">
   </div>
+
+  <div id="map" class="col-12 py-2 mapaAdministrador"></div>
   
   <div class="col-12 pt-5">
     <div type="" class="btn btn-primary" id="guardarPropiedad">Guardar</div>

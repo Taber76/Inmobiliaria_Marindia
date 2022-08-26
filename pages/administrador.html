@@ -63,11 +63,14 @@ FACEBOOK: https://www.facebook.com/themefisher
 
   <!-- CURSO JAVASCRIPT-->
   <script defer src="../plugins/sweeralert/sweetalert2.all.min.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYqPR5GkxwKplarJ3GV_kGjWFm10nrGLA&callback=initMap"></script>
   <script defer src="../js/datos.js"></script>
   <script defer src="../js/templateshtml.js"></script>
+  <script defer src="../js/mapas.js"></script>
   <script defer src="../js/administrador.js"></script>
- 
+  
 
+  
 </head>
 <body>
 
@@ -78,12 +81,18 @@ FACEBOOK: https://www.facebook.com/themefisher
   <div class="site-navigation">
     <div class="container">
         <div class="row">
-          
-          <div id="usuarioActual" class="col-lg-3 usuarioLogueado"> 
-          
-          </div>
 
-          <div class="col-lg-9">
+          
+            <div class="logo col-lg-1 text-center text-lg-left mb-3 mb-md-5 mb-lg-0">
+                <a class="" href="../index.html">
+                  <img loading="lazy" src="../images/Logo_Inmobiliaria-Marindia.png" alt="Inmobiliaria Marindia">
+                </a>
+            </div>
+            
+          
+          <div id="usuarioActual" class="col-lg-3 usuarioLogueado"></div>
+
+          <div class="col-lg-8 align-items-center" style="display: flex; justify-content: center;">
 
                 <div class="row justify-content-center">
                   <form id="formlogin">

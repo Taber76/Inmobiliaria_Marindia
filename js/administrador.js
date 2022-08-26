@@ -51,7 +51,7 @@ const editarPropiedad = document.getElementById("editarPropiedad")
 const logged = document.getElementById('usuarioActual')
 
 
-// ============= Login ================
+// ============= Login ================================= //
 loginbtn.addEventListener('click', (e) => {
   e.preventDefault()
 
@@ -61,6 +61,7 @@ loginbtn.addEventListener('click', (e) => {
 
   if (login(usuario, clave)[0]){
     // usuario logeado - habilito / desabilito botones
+
     nuevaPropiedad.classList.remove('disabled')  
     editarPropiedad.classList.remove('disabled')
     loginbtn.setAttribute("disabled", "")
@@ -69,14 +70,13 @@ loginbtn.addEventListener('click', (e) => {
     inputClave.value = ''
     logged.innerHTML = `<h5 class="usuarioLogueado-texto">Bienvenido ${usuario} - ${login(usuario, clave)[1]}</h5>`
       
-
   }else{
     modal('Nombre de Usuario o clave incorrecta', '')
   }
 
 })
 
-// ================= Logout =================
+// ================= Logout ================================== //
 logoutbtn.addEventListener('click', (e) =>{
   e.preventDefault()
   nuevaPropiedad.classList.add('disabled')  
@@ -86,7 +86,6 @@ logoutbtn.addEventListener('click', (e) =>{
   logged.innerHTML = ''
   areaAdministrador.innerHTML = ''
 
-
 })
 
 
@@ -95,6 +94,10 @@ logoutbtn.addEventListener('click', (e) =>{
 nuevaPropiedad.addEventListener('click', () => {
   
   areaAdministrador.innerHTML = templateNuevaPropiedad()
+  let id = propiedades[propiedades.length - 1].id + 1
+  
+  initMap(14)
+  let latitud, longitud, mapMarcador 
 
   const nuevaTipoOperacion = document.getElementById('tipoOperacion')
   const nuevaTipoPropiedad = document.getElementById('tipoPropiedad')
@@ -107,10 +110,31 @@ nuevaPropiedad.addEventListener('click', () => {
   const nuevaFoto = document.getElementById('inputFoto')
   const nuevaGuardar = document.getElementById('guardarPropiedad')
 
+  
+  // Agrego evento de click sobre el mapa
+  google.maps.event.addListener(map, "click", function (event) {
+    let latLng = event.latLng;
+
+    if (mapMarcador != null){
+      mapMarcador.setMap(null)
+      mapMarcador = null
+    }
+
+    mapMarcador = new google.maps.Marker({
+       position: new google.maps.LatLng(latLng.lat(), latLng.lng()),
+        map: map,
+        title: "ID: " + id.toString()
+      })  
+    
+    latitud = latLng.lat()
+    longitud = latLng.lng()
+  })
+
 
   nuevaGuardar.addEventListener('click', (e) => {
     e.preventDefault()
   
+    id = propiedades[propiedades.length - 1].id + 1
     
     if( nuevaValor.value == '' || nuevaSuperficie.value == '' 
     || (nuevaTipoPropiedad.value != "Terreno" & nuevaDormitorios.value == '')){
@@ -119,13 +143,26 @@ nuevaPropiedad.addEventListener('click', () => {
   
     }else{ // guardo nueva propiedad si los datos son validos
   
-      propiedades.push(new Propiedad( propiedades[propiedades.length - 1].id + 1,
-        `/images/propiedades/${nuevaFoto.value}`, nuevaTipoOperacion.value, nuevaTipoPropiedad.value, nuevaUbicacion.value, nuevaValor.value,
-        nuevaSuperficie.value, nuevaDormitorios.value, nuevaGarage.checked, nuevaPiscina.checked))
+      propiedades.push(new Propiedad(
+        id,
+        `/images/propiedades/${nuevaFoto.value}`,
+        nuevaTipoOperacion.value,
+        nuevaTipoPropiedad.value,
+        nuevaUbicacion.value,
+        nuevaValor.value,
+        nuevaSuperficie.value,
+        nuevaDormitorios.value,
+        nuevaGarage.checked,
+        nuevaPiscina.checked,
+        latitud,
+        longitud
+        ))
   
-        localStorage.setItem('propiedades', JSON.stringify(propiedades))
+      localStorage.setItem('propiedades', JSON.stringify(propiedades))
+      modal('Propiedad guardada','')
+      areaAdministrador.innerHTML = ''
 
-        modal('Propiedad guardada','')
+      
     }
   })
 })

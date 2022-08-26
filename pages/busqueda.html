@@ -59,7 +59,9 @@ FACEBOOK: https://www.facebook.com/themefisher
 
   <!-- CURSO JAVASCRIPT-->
   <script defer src="../js/datos.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYqPR5GkxwKplarJ3GV_kGjWFm10nrGLA&callback=initMap"></script>
   <script defer src="../js/templateshtml.js"></script>
+  <script defer src="../js/mapas.js"></script>
   <script defer src="../js/busqueda.js"></script>
   
 
@@ -110,7 +112,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 
           <div class="row align-items-center">
             <div class="logo col-lg-1 text-center text-lg-left mb-3 mb-md-5 mb-lg-0">
-                <a class="d-block" href="index.html">
+                <a class="d-block" href="../index.html">
                   <img loading="lazy" src="../images/Logo_Inmobiliaria-Marindia.png" alt="Inmobiliaria Marindia">
                 </a>
             </div><!-- logo end -->
@@ -209,7 +211,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 </header>
 <!--/ Header end -->
 
-<!-- Buscador -->
+<!-- Buscador --------------------------------------------------------------------------------->
 <section class="call-to-action-box no-padding" style="margin: 10px;">
   <div class="container">
   
@@ -249,8 +251,12 @@ FACEBOOK: https://www.facebook.com/themefisher
             </select>
           </li>
           <li class="nav-item">
-            <button class="btn btn-primary" type="button" onclick="buscarPropiedades()">BUSCAR</button>
+            <button class="btn btn-primary" id="btnBuscar">LISTADO</button>
           </li>
+          <li class="nav-item">
+            <button class="btn btn-primary" id="btnMapa">VER EN MAPA</button>
+          </li>
+
         </ul>
       </div>
     </nav>
@@ -359,11 +365,6 @@ FACEBOOK: https://www.facebook.com/themefisher
   <script src="../plugins/shuffle/shuffle.min.js" defer></script>
 
   
-
-  <!-- Google Map API Key-->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" defer></script>
-  <!-- Google Map Plugin-->
-  <script src="../plugins/google-map/map.js" defer></script>
 
   <!-- Template custom -->
   <script src="../js/script.js"></script>

@@ -3401,6 +3401,8 @@ label {
   padding: 30px;
 }
 
+
+
 .usuarioLogueado{
   justify-content: center;
   align-items: center;
@@ -3416,3 +3418,11 @@ label {
   color: #4a5764;
 }
 
+
+.mapaAdministrador{
+  height: 50vh;
+}
+
+.mapaBusqueda{
+  height: 80vh;
+}

@@ -1,5 +1,5 @@
 // Devuelve lista de propiedades segun criterio
-function listaPropiedades(tipoOperacion, tipoPropiedad, ubicacion){
+function filtraPropiedades(tipoOperacion, tipoPropiedad, ubicacion){
 
   return propiedades
   .filter(prop => tipoOperacion == prop.tipoOperacion.toLowerCase() || tipoOperacion === "todas")
@@ -13,7 +13,7 @@ function propDestacadas(tipoOperacion, tipoPropiedad){
 
   let fragment = ""
   const htmldestacadas = document.getElementById("destacadas")
-  lista = listaPropiedades(tipoOperacion, tipoPropiedad, "ubicacion")
+  lista = filtraPropiedades(tipoOperacion, tipoPropiedad, "ubicacion")
   
   lista.forEach((prop) => {
     fragment += templateDestacadas(prop)
