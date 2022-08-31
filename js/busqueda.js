@@ -1,49 +1,33 @@
 // ========================== FUNCIONES ======================= //
 
-// Capturo los criterios de filtrado
-function buscarPropiedades(tipo) {
+// Filtro segun los criterios de filtrado
+function filtrarPropiedades() {
  
   //tomo las claves de busqueda del HTML
   let tipoOperacion = document.getElementById("tipoOperacion").value.toLowerCase()
   let tipoPropiedad = document.getElementById("tipoPropiedad").value.toLowerCase()
   let ubicacion = document.getElementById("ubicacion").value.toLowerCase()
 
-  if (tipo === 'lista'){ // genero un listado en el DOM
-    listarPropiedadesHTML(tipoOperacion, tipoPropiedad, ubicacion)
-    return
-
-  }else{ // devuelvo un array filtrado
-    return propiedades
+  // devuelvo array filtrado
+  return propiedades
     .filter(prop => tipoOperacion == prop.tipoOperacion.toLowerCase() || tipoOperacion === "todas")
     .filter(prop => tipoPropiedad == prop.tipoPropiedad.toLowerCase() || tipoPropiedad == "tipo de propiedad")
     .filter(prop => ubicacion == prop.ubicacion.toLowerCase() || ubicacion == "ubicacion")
-  }
-
 }
 
 
 // Genero listado en HTML
-function listarPropiedadesHTML(tipoOperacion, tipoPropiedad, ubicacion){
+function listarPropiedadesHTML(){
 
   //selecciono elemento HTML dentro del cual se mostraran los resultados de la busqueda
   const htmlfiltropropiedades = document.getElementById("resultados")
 
   let fragment = ""
   
-  //recorro el array
-  propiedades.forEach((prop) => {
-
-    if((tipoOperacion == prop.tipoOperacion.toLowerCase() || tipoOperacion == "todas") & 
-      (tipoPropiedad == prop.tipoPropiedad.toLowerCase() || tipoPropiedad == "tipo de propiedad") &
-      (ubicacion == prop.ubicacion.toLowerCase() || ubicacion == "ubicacion")){
-        
-      //agrego propiedad al fragment  
-      //fragment += templateVentaCasa(prop)
-      fragment += templateSegunPropiedad(prop)
-      }
+  filtrarPropiedades().forEach((prop) => {       
+    fragment += templateSegunPropiedad(prop)
   })
-
- 
+   
   fragment == "" && (fragment += templateNotFound()) // no hubieron coincidencias de busqueda 
 
   //agrego fragment al HTML
@@ -54,7 +38,7 @@ function listarPropiedadesHTML(tipoOperacion, tipoPropiedad, ubicacion){
 
 
 // Cargo mapa con propiedades
-function buscarPropiedadesMapa(){
+function listarPropiedadesMapa(){
 
   // Genero el div para el mapa en el DOM
   document.getElementById("resultados").innerHTML = '<div id="map" class="col-12 py-2 mapaBusqueda"></div>'
@@ -65,7 +49,7 @@ function buscarPropiedadesMapa(){
 
   
   // cargo marcas e info en el mapa
-  buscarPropiedades("mapa").forEach( (propiedad) => {
+  filtrarPropiedades().forEach( (propiedad) => {
 
     // marcas
     mapMarcador = new google.maps.Marker({
@@ -93,9 +77,9 @@ function buscarPropiedadesMapa(){
 // ============================ SCRIPT ========================= //
 
 //cargo array de propiedades
-let propiedades = cargaPropiedades()
+let propiedades = JSON.parse(localStorage.getItem("propiedades"))
 
-listarPropiedadesHTML("venta", "tipo de propiedad", "ubicacion")
+listarPropiedadesHTML()
 
 const btnBuscar = document.getElementById("btnBuscar")
 const btnMapa = document.getElementById("btnMapa")
@@ -103,10 +87,10 @@ const btnMapa = document.getElementById("btnMapa")
 
 btnBuscar.addEventListener('click', (e) => {
   e.preventDefault()
-  buscarPropiedades("lista")
+  listarPropiedadesHTML()
 })
 
 btnMapa.addEventListener('click', (e) => {
   e.preventDefault()
-  buscarPropiedadesMapa()
+  listarPropiedadesMapa()
 })

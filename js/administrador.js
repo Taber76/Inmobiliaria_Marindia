@@ -1,6 +1,5 @@
 
 // ======================= Funciones ====================== //
-
 function login(usuario, clave){ 
 
   let rol = ''
@@ -32,11 +31,45 @@ function listarPropiedadesEditar(elemento){
 
 
 
-// =============================== SCRIPT ============================= //
+function borrarPropiedad(idborrar, areaEditarPropiedad){
+
+  if (idborrar != ""){
+    
+    Swal.fire({
+      title: 'Desea borrar la propiedad?',
+      showDenyButton: true,
+      icon: 'warning',
+      confirmButtonText: 'Si, borrar',
+      denyButtonText: `No, cancelar`,
+      confirmButtonColor: '#d33',
+      denyButtonColor: '#008000',
+    }).then((result) => {
+      
+      if (result.isConfirmed) {
+        Swal.fire('Borrada!', '', 'success')
+        propiedades.splice(propiedades.findIndex((e) => e.id == idborrar), 1)
+        localStorage.setItem('propiedades', JSON.stringify(propiedades))
+        listarPropiedadesEditar(areaEditarPropiedad)
+
+      } else if (result.isDenied) {
+        Swal.fire('No se ha borrado la propiedad', '', 'info')
+        
+      }
+    })
+      
+  }
+  
+  return 
+}
+
+
+
+// ====================================== SCRIPT ========================================== //
 
 // cargo los array
-let propiedades = cargaPropiedades()
+let propiedades = JSON.parse(localStorage.getItem("propiedades"))
 let usuarios = cargaUsuarios()
+let nombrearchivo
 
 
 // declaro los botones principales
@@ -62,8 +95,19 @@ loginbtn.addEventListener('click', (e) => {
   if (login(usuario, clave)[0]){
     // usuario logeado - habilito / desabilito botones
 
+    Toastify({
+      text: "Credenciales correctas",
+      duration: 3000,
+      gravity: "bottom",
+      position: "right",
+      style: {
+        background: "linear-gradient(to right, #00aae4, #2271b3)",
+      }
+    }).showToast()
+
+
     nuevaPropiedad.classList.remove('disabled')  
-    editarPropiedad.classList.remove('disabled')
+    login(usuario, clave)[1] == "administrador" && editarPropiedad.classList.remove('disabled') // solo habilito el boton si es administrador
     loginbtn.setAttribute("disabled", "")
     logoutbtn.removeAttribute("disabled")
     inputUsuario.value = ''
@@ -115,12 +159,12 @@ nuevaPropiedad.addEventListener('click', () => {
   google.maps.event.addListener(map, "click", function (event) {
     let latLng = event.latLng;
 
-    if (mapMarcador != null){
+    if (mapMarcador != null){ // si ya hay un marcador lo borro
       mapMarcador.setMap(null)
       mapMarcador = null
     }
 
-    mapMarcador = new google.maps.Marker({
+    mapMarcador = new google.maps.Marker({ 
        position: new google.maps.LatLng(latLng.lat(), latLng.lng()),
         map: map,
         title: "ID: " + id.toString()
@@ -131,21 +175,35 @@ nuevaPropiedad.addEventListener('click', () => {
   })
 
 
+  // Guardar propiedad en local storage
   nuevaGuardar.addEventListener('click', (e) => {
     e.preventDefault()
   
     id = propiedades[propiedades.length - 1].id + 1
     
-    if( nuevaValor.value == '' || nuevaSuperficie.value == '' 
-    || (nuevaTipoPropiedad.value != "Terreno" & nuevaDormitorios.value == '')){
-  
-      modal('Valores incorrectos', 'Revise e intente nuevamente')
-  
+    console.log(isNaN(nuevaValor.value))
+    //console.log(isNaN(""))
+    console.log(nuevaValor.value)
+    console.log(typeof(nuevaValor.value))
+
+    if (isNaN(nuevaValor.value) || nuevaValor.value < 1){
+      console.log('1')
+      modal('Debe ingresar un valor','')
+
+    }else if (isNaN(nuevaSuperficie.value) || nuevaSuperficie.value < 1){
+      console.log('2')
+      modal('Debe ingresar una superficie','')
+
+    }else if ((isNaN(nuevaDormitorios.value) || nuevaDormitorios.value < 1 ) & nuevaTipoPropiedad.value != 'Terreno'){
+      modal('Debe ingresar la cantidad de dormitorios','')
+
     }else{ // guardo nueva propiedad si los datos son validos
-  
+
+      (nuevaFoto.files.length === 0) ? nombrearchivo = "nodisponible.png" : nombrearchivo = nuevaFoto.files[0].name
+        
       propiedades.push(new Propiedad(
         id,
-        `/images/propiedades/${nuevaFoto.value}`,
+        `/images/propiedades/${nombrearchivo}`,
         nuevaTipoOperacion.value,
         nuevaTipoPropiedad.value,
         nuevaUbicacion.value,
@@ -162,7 +220,6 @@ nuevaPropiedad.addEventListener('click', () => {
       modal('Propiedad guardada','')
       areaAdministrador.innerHTML = ''
 
-      
     }
   })
 })

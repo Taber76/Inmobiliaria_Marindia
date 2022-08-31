@@ -48,11 +48,90 @@ function alPresionar(opcion, tipoOperacion, tipoPropiedad){
 }
 
 
+// Propiedades destacadas
+function propiedadesDestacadas(){
+  
+  propiedades = JSON.parse(localStorage.getItem("propiedades"))
+
+  if(!propiedades){  //si no hay propiedades cargadas en el local storage
+
+    Toastify({
+      text: "Cargando recursos...",
+      duration: 4800,
+      gravity: "bottom",
+      position: "left",
+      style: {
+        background: "linear-gradient(to right, #f75e25, #fe0000)",
+      }
+    }).showToast()
+
+
+    fetch("../json/propiedades.json")  
+    .then((response) => response.json())
+    .then((data) => {
+      
+      setTimeout(() =>  {   // simulo retardo de 5s en respuesta
+        propiedades = data
+        localStorage.setItem('propiedades', JSON.stringify(propiedades))
+        alPresionar(casas, "todas", "casa")
+        eventosDOM()
+
+        Toastify({
+          text: "Recursos cargados",
+          duration: 2000,
+          gravity: "bottom",
+          position: "left",
+          style: {
+            background: "linear-gradient(to right, #bdecb6, #2d572c)",
+          }
+        }).showToast()
+
+      } ,5000)
+         
+    })
+ 
+  }else{
+    alPresionar(casas, "todas", "casa")
+    eventosDOM()
+  }
+
+  return
+}
+
+
+function eventosDOM(){
+
+  casas.addEventListener('click',() => {
+    alPresionar(casas, "todas", "casa")
+  })
+
+  apartamentos.addEventListener('click',() => {
+    alPresionar(apartamentos, "todas", "apartamento")
+  })
+
+  alquileres.addEventListener('click',() => {
+    alPresionar(alquileres, "alquiler", "tipo de propiedad")
+  })
+
+  terrenos.addEventListener('click',() => {
+    alPresionar(terrenos, "todas", "terreno")
+  })
+
+  locales.addEventListener('click',() => {
+    alPresionar(locales, "todas", "local")
+  })
+
+  chacras.addEventListener('click',() => {
+    alPresionar(chacras, "todas", "chacra")
+  })
+
+}
+
 
 
 // ============================ SCRIPT ========================= //
 
-let propiedades = cargaPropiedades()
+let propiedades = []
 
 // declaro las constantes relacionadas al HTML
 const casas = document.getElementById("casas")
@@ -62,34 +141,10 @@ const terrenos = document.getElementById("terrenos")
 const locales = document.getElementById("locales")
 const chacras = document.getElementById("chacras")
 
-// muestro las casas destacadas
-alPresionar(casas, "todas", "casa")
+
+propiedadesDestacadas()
 
 
-// eventos posibles
-casas.addEventListener('click',() => {
-  alPresionar(casas, "todas", "casa")
-})
-
-apartamentos.addEventListener('click',() => {
-  alPresionar(apartamentos, "todas", "apartamento")
-})
-
-alquileres.addEventListener('click',() => {
-  alPresionar(alquileres, "alquiler", "tipo de propiedad")
-})
-
-terrenos.addEventListener('click',() => {
-  alPresionar(terrenos, "todas", "terreno")
-})
-
-locales.addEventListener('click',() => {
-  alPresionar(locales, "todas", "local")
-})
-
-chacras.addEventListener('click',() => {
-  alPresionar(chacras, "todas", "chacra")
-})
 
 
 

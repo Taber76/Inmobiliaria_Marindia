@@ -202,7 +202,7 @@ function templateNuevaPropiedad(){
   
   <div class="col-12 py-2">
     <label for="inputFoto" class="form-label">Foto</label>
-    <input type="text" class="form-control" id="inputFoto" placeholder="Nombre de archivo de la foto">
+    <input type="file" class="form-control" id="inputFoto" placeholder="Nombre de archivo de la foto">
   </div>
 
   <div id="map" class="col-12 py-2 mapaAdministrador"></div>
