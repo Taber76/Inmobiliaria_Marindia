@@ -47,7 +47,6 @@ function listarPropiedadesMapa(){
   // defino variables para el mapa
   let mapMarcador, infoWindow, contenido
 
-  
   // cargo marcas e info en el mapa
   filtrarPropiedades().forEach( (propiedad) => {
 
@@ -65,13 +64,11 @@ function listarPropiedadesMapa(){
         infoWindow.setContent(contenido)
         infoWindow.open(map, this)
       }
-     }(contenido))
-      
+     }(contenido))  
   })
 
   return
 }
-
 
 
 // ============================ SCRIPT ========================= //
@@ -83,7 +80,6 @@ listarPropiedadesHTML()
 
 const btnBuscar = document.getElementById("btnBuscar")
 const btnMapa = document.getElementById("btnMapa")
-
 
 btnBuscar.addEventListener('click', (e) => {
   e.preventDefault()

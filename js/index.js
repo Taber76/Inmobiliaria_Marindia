@@ -31,8 +31,8 @@ function borrarActives(){
   apartamentos.parentNode.className = "" 
   alquileres.parentNode.className = "" 
   terrenos.parentNode.className = "" 
-  locales.parentNode.className = "" 
-  chacras.parentNode.className = ""
+ // locales.parentNode.className = "" 
+ // chacras.parentNode.className = ""
   
   return
 }
@@ -55,18 +55,9 @@ function propiedadesDestacadas(){
 
   if(!propiedades){  //si no hay propiedades cargadas en el local storage
 
-    Toastify({
-      text: "Cargando recursos...",
-      duration: 4800,
-      gravity: "bottom",
-      position: "left",
-      style: {
-        background: "linear-gradient(to right, #f75e25, #fe0000)",
-      }
-    }).showToast()
-
-
-    fetch("../json/propiedades.json")  
+    toast("Cargando recursos...", 4800, "linear-gradient(to right, #f75e25, #fe0000)")
+    
+    fetch("../json/propiedades.json")  //============= Fetch
     .then((response) => response.json())
     .then((data) => {
       
@@ -75,17 +66,7 @@ function propiedadesDestacadas(){
         localStorage.setItem('propiedades', JSON.stringify(propiedades))
         alPresionar(casas, "todas", "casa")
         eventosDOM()
-
-        Toastify({
-          text: "Recursos cargados",
-          duration: 2000,
-          gravity: "bottom",
-          position: "left",
-          style: {
-            background: "linear-gradient(to right, #bdecb6, #2d572c)",
-          }
-        }).showToast()
-
+        toast("Recursos cargados", 2000, "linear-gradient(to right, #bdecb6, #2d572c)")
       } ,5000)
          
     })
@@ -117,13 +98,13 @@ function eventosDOM(){
     alPresionar(terrenos, "todas", "terreno")
   })
 
-  locales.addEventListener('click',() => {
-    alPresionar(locales, "todas", "local")
-  })
+ // locales.addEventListener('click',() => {
+ //   alPresionar(locales, "todas", "local")
+ // })
 
-  chacras.addEventListener('click',() => {
-    alPresionar(chacras, "todas", "chacra")
-  })
+//  chacras.addEventListener('click',() => {
+//    alPresionar(chacras, "todas", "chacra")
+//  })
 
 }
 
@@ -138,8 +119,8 @@ const casas = document.getElementById("casas")
 const apartamentos = document.getElementById("apartamentos")
 const alquileres = document.getElementById("alquileres")
 const terrenos = document.getElementById("terrenos")
-const locales = document.getElementById("locales")
-const chacras = document.getElementById("chacras")
+//const locales = document.getElementById("locales")
+//const chacras = document.getElementById("chacras")
 
 
 propiedadesDestacadas()

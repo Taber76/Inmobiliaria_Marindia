@@ -1,29 +1,43 @@
 
 // ======================= Funciones ====================== //
-function login(usuario, clave){ 
+function login(usuario, clave){ // verifica usuario - clave, guarda en sessionStorage y devuelve rol
 
   let rol = ''
   let correcta = false
-  
   usuarios.forEach(ele => {
     if (ele.nombre === usuario & ele.clave === clave){
       correcta = true
       rol = ele.rol
     }
   })
+  sessionStorage.setItem('userID', usuario)
+  sessionStorage.setItem('userClave', clave)
 
   return [correcta, rol]
 }
 
 
+function activarBotones(usuario, clave){ // activa - desactiva botones del DOM
 
-function listarPropiedadesEditar(elemento){  
+  nuevaPropiedad.classList.remove('disabled')  
+  login(usuario, clave)[1] == "administrador" && editarPropiedad.classList.remove('disabled') // solo habilito el boton si es administrador
+  loginbtn.setAttribute("disabled", "")
+  logoutbtn.removeAttribute("disabled")
+  inputUsuario.value = ''
+  inputClave.value = ''
+  logged.innerHTML = `<h5 class="usuarioLogueado-texto">Bienvenido ${usuario} - ${login(usuario, clave)[1]}</h5>`
+
+  return
+}
+
+
+
+function listarPropiedadesEditar(elemento){  // lista propiedades en el DOM
   
   let fragment = ''
   propiedades.forEach((ele) => {
     fragment += templateeditarPropiedad(ele)
   })
-
   elemento.innerHTML = fragment
 
   return
@@ -31,7 +45,7 @@ function listarPropiedadesEditar(elemento){
 
 
 
-function borrarPropiedad(idborrar, areaEditarPropiedad){
+function borrarPropiedad(idborrar, areaEditarPropiedad){ // borra la propiedad seleccionada
 
   if (idborrar != ""){
     
@@ -69,7 +83,9 @@ function borrarPropiedad(idborrar, areaEditarPropiedad){
 // cargo los array
 let propiedades = JSON.parse(localStorage.getItem("propiedades"))
 let usuarios = cargaUsuarios()
-let nombrearchivo
+
+let usuario = sessionStorage.getItem('userID')
+let clave = sessionStorage.getItem('userClave')
 
 
 // declaro los botones principales
@@ -85,39 +101,21 @@ const logged = document.getElementById('usuarioActual')
 
 
 // ============= Login ================================= //
+usuario && activarBotones(usuario, clave) // verifico si estoy logeado en session
+
 loginbtn.addEventListener('click', (e) => {
   e.preventDefault()
 
-  const usuario = inputUsuario.value
-  const clave = inputClave.value
-  
-
-  if (login(usuario, clave)[0]){
+  usuario = inputUsuario.value
+  clave = inputClave.value
+    if (login(usuario, clave)[0]){
     // usuario logeado - habilito / desabilito botones
-
-    Toastify({
-      text: "Credenciales correctas",
-      duration: 3000,
-      gravity: "bottom",
-      position: "right",
-      style: {
-        background: "linear-gradient(to right, #00aae4, #2271b3)",
-      }
-    }).showToast()
-
-
-    nuevaPropiedad.classList.remove('disabled')  
-    login(usuario, clave)[1] == "administrador" && editarPropiedad.classList.remove('disabled') // solo habilito el boton si es administrador
-    loginbtn.setAttribute("disabled", "")
-    logoutbtn.removeAttribute("disabled")
-    inputUsuario.value = ''
-    inputClave.value = ''
-    logged.innerHTML = `<h5 class="usuarioLogueado-texto">Bienvenido ${usuario} - ${login(usuario, clave)[1]}</h5>`
+    toast("Credenciales correctas", 3000, "linear-gradient(to right, #00aae4, #2271b3)")
+    activarBotones(usuario, clave)
       
   }else{
-    modal('Nombre de Usuario o clave incorrecta', '')
+    modal('Nombre de Usuario o clave incorrecta', 'Prueba con: taba - 123 o conrado - 123')
   }
-
 })
 
 // ================= Logout ================================== //
@@ -129,6 +127,8 @@ logoutbtn.addEventListener('click', (e) =>{
   loginbtn.removeAttribute("disabled")
   logged.innerHTML = ''
   areaAdministrador.innerHTML = ''
+  sessionStorage.removeItem('userID')
+  sessionStorage.removeItem('userClave')
 
 })
 
@@ -141,7 +141,8 @@ nuevaPropiedad.addEventListener('click', () => {
   let id = propiedades[propiedades.length - 1].id + 1
   
   initMap(14)
-  let latitud, longitud, mapMarcador 
+  let latitud, longitud, mapMarcador, foto
+  let idfoto =  "seleccionFoto"
 
   const nuevaTipoOperacion = document.getElementById('tipoOperacion')
   const nuevaTipoPropiedad = document.getElementById('tipoPropiedad')
@@ -151,9 +152,19 @@ nuevaPropiedad.addEventListener('click', () => {
   const nuevaDormitorios = document.getElementById('inputDormitorios')
   const nuevaGarage = document.getElementById('inputGarage')
   const nuevaPiscina = document.getElementById('inputPiscina')
-  const nuevaFoto = document.getElementById('inputFoto')
+  const selectorFotos = document.getElementById('selectorFotos')
   const nuevaGuardar = document.getElementById('guardarPropiedad')
 
+  // Selecciono foto de casa
+  selectorFotos.addEventListener('click', (e) => {
+
+    idfoto != "seleccionFoto" && document.getElementById(idfoto).classList.remove("selected")
+  
+    //slice(13) es para tomar solo la parte numerica del id: "seleccionFotoN"
+    idfoto = "seleccionFoto" + e.target.id.slice(13)
+    document.getElementById(idfoto).classList.add("selected")
+    foto = `/images/propiedades/nuevapropiedad${e.target.id.slice(13)}.png`
+  })
   
   // Agrego evento de click sobre el mapa
   google.maps.event.addListener(map, "click", function (event) {
@@ -181,29 +192,21 @@ nuevaPropiedad.addEventListener('click', () => {
   
     id = propiedades[propiedades.length - 1].id + 1
     
-    console.log(isNaN(nuevaValor.value))
-    //console.log(isNaN(""))
-    console.log(nuevaValor.value)
-    console.log(typeof(nuevaValor.value))
-
+    // Validacion de datos
     if (isNaN(nuevaValor.value) || nuevaValor.value < 1){
-      console.log('1')
-      modal('Debe ingresar un valor','')
+      toast("Debe ingresar un valor", 3000, "linear-gradient(to right, #c82a54, #ef280f)")
 
     }else if (isNaN(nuevaSuperficie.value) || nuevaSuperficie.value < 1){
-      console.log('2')
-      modal('Debe ingresar una superficie','')
+      toast("Debe ingresar una superficie", 3000, "linear-gradient(to right, #c82a54, #ef280f)")
 
     }else if ((isNaN(nuevaDormitorios.value) || nuevaDormitorios.value < 1 ) & nuevaTipoPropiedad.value != 'Terreno'){
-      modal('Debe ingresar la cantidad de dormitorios','')
+      toast("Debe ingresar la cantidad de dormitorios", 3000, "linear-gradient(to right, #c82a54, #ef280f)")
 
     }else{ // guardo nueva propiedad si los datos son validos
-
-      (nuevaFoto.files.length === 0) ? nombrearchivo = "nodisponible.png" : nombrearchivo = nuevaFoto.files[0].name
         
       propiedades.push(new Propiedad(
         id,
-        `/images/propiedades/${nombrearchivo}`,
+        foto,
         nuevaTipoOperacion.value,
         nuevaTipoPropiedad.value,
         nuevaUbicacion.value,
@@ -230,15 +233,11 @@ nuevaPropiedad.addEventListener('click', () => {
 editarPropiedad.addEventListener('click', () => {
 
   areaAdministrador.innerHTML = '<div id="containerEdicion"></div>'
-
   const areaEditarPropiedad = document.getElementById('containerEdicion')
   listarPropiedadesEditar(areaEditarPropiedad)
 
   areaEditarPropiedad.addEventListener('click', (e) => {
-
     //slice(18) es para tomar solo la parte numerica del id: "btneditarPropiedadNNN"
     borrarPropiedad(e.target.id.slice(18), areaEditarPropiedad)
-
   })
-
 })

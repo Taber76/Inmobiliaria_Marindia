@@ -56,7 +56,5 @@ function cargaUsuarios(){
 
 
 
-
-
 // ===============================
 console.log('DATOS')

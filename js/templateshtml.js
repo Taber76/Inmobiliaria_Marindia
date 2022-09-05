@@ -200,9 +200,23 @@ function templateNuevaPropiedad(){
     </div>
   </div>
   
-  <div class="col-12 py-2">
-    <label for="inputFoto" class="form-label">Foto</label>
-    <input type="file" class="form-control" id="inputFoto" placeholder="Nombre de archivo de la foto">
+  <div id="selectorFotos" class="col-12 py-2">
+    <label for="inputFoto" class="form-label">Seleccione foto</label>
+    <div class="row">
+      <div class="col-4 py-2"><img id="seleccionFoto1" src="../images/propiedades/nuevapropiedad1.png" class="card-img-top" alt=""></div>
+      <div class="col-4 py-2"><img id="seleccionFoto2" src="../images/propiedades/nuevapropiedad2.png" class="card-img-top" alt=""></div>
+      <div class="col-4 py-2"><img id="seleccionFoto3" src="../images/propiedades/nuevapropiedad3.png" class="card-img-top" alt=""></div>
+    </div>
+    <div class="row">
+      <div class="col-4 py-2"><img id="seleccionFoto4" src="../images/propiedades/nuevapropiedad4.png" class="card-img-top" alt=""></div>
+      <div class="col-4 py-2"><img id="seleccionFoto5" src="../images/propiedades/nuevapropiedad5.png" class="card-img-top" alt=""></div>
+      <div class="col-4 py-2"><img id="seleccionFoto6" src="../images/propiedades/nuevapropiedad6.png" class="card-img-top" alt=""></div>
+    </div>
+    <div class="row">
+      <div class="col-4 py-2"><img id="seleccionFoto7" src="../images/propiedades/nuevapropiedad7.png" class="card-img-top" alt=""></div>
+      <div class="col-4 py-2"><img id="seleccionFoto8" src="../images/propiedades/nuevapropiedad8.png" class="card-img-top" alt=""></div>
+      <div class="col-4 py-2"><img id="seleccionFoto9" src="../images/propiedades/nuevapropiedad9.png" class="card-img-top" alt=""></div>
+    </div>
   </div>
 
   <div id="map" class="col-12 py-2 mapaAdministrador"></div>
@@ -250,7 +264,7 @@ function modal(titulo, subtitulo){
   let card = 
   `<div class="modal">
       <h3>${titulo}</h3>
-      <h4>${subtitulo}</h4>
+      <p>${subtitulo}</p>
       <button id="modal-close" class="btn btn-primary">Aceptar</button>
     </div>`
 
@@ -263,6 +277,28 @@ function modal(titulo, subtitulo){
 
   return
 }
+
+
+// ===================== TOASTIFY ==================== //
+
+function toast(mensaje, duracion, color){
+
+  Toastify({
+    text: mensaje,
+    duration: duracion,
+    gravity: "bottom",
+    position: "left",
+    style: {
+      background: color,
+    }
+  }).showToast()
+
+  return
+
+}
+
+// ==============================================================
+
 
 
 console.log('TEMPLATES OK')

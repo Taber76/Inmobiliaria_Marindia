@@ -3426,3 +3426,7 @@ label {
 .mapaBusqueda{
   height: 80vh;
 }
+
+.selected{
+  opacity: .5;
+}
