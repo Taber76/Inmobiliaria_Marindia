@@ -101,7 +101,7 @@ const logged = document.getElementById('usuarioActual')
 
 
 // ============= Login ================================= //
-usuario && activarBotones(usuario, clave) // verifico si estoy logeado en session
+login(usuario, clave)[0] && activarBotones(usuario, clave) // verifico si estoy logeado en session
 
 loginbtn.addEventListener('click', (e) => {
   e.preventDefault()
@@ -118,6 +118,7 @@ loginbtn.addEventListener('click', (e) => {
   }
 })
 
+
 // ================= Logout ================================== //
 logoutbtn.addEventListener('click', (e) =>{
   e.preventDefault()
@@ -131,7 +132,6 @@ logoutbtn.addEventListener('click', (e) =>{
   sessionStorage.removeItem('userClave')
 
 })
-
 
 
  // ========== Nueva propiedad ====================================== //
